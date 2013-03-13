@@ -1,8 +1,16 @@
-/var/log/glusterfs/*.log {
+/var/log/glusterfs/*.log
+/var/log/glusterfs/bricks/*.log
+/var/log/glusterfs/geo-replication/*.log
+/var/log/glusterfs/geo-replication-slaves/*.log
+{
 	daily
 	rotate 7
 	delaycompress
 	compress
 	notifempty
 	missingok
+	sharedscripts
+	postrotate
+		pgrep glusterfs | xargs --no-run-if-empty kill -HUP
+	endscript
 }
